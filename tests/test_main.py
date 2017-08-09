@@ -8,6 +8,29 @@ import samosa
 #     ('The.Princess.And.The.Frog.2009.1080p.BluRay.AVC.DTS-HD.MA.5.1-FGT.avi'),
 # ])
 
-def test_find_only_mkv_files():
-    file_list = samosa.find_all_media_files()
-    assert len(file_list) is 2
+@pytest.fixture
+def movielist():
+    return ['Kimi.no.na.wa.aka.Your.Name.2016.JAPANESE.1080p.BluRay.REMUX.AVC.DTS-HD.MA.5.1-FGT.mkv',
+            'Looney.Tunes.Volume.2.1936-1959.1080p.BluRay.REMUX.AVC.DD1.0-RARBG.mp4',
+            'The.Princess.And.The.Frog.2009.1080p.BluRay.AVC.DTS-HD.MA.5.1-FGT.avi',
+            'MyPresentation.ppt'
+            ]
+
+
+def test_find_only_mkv_files(movielist, tmpdir):
+    for movie in movielist:
+        f1 = tmpdir.join(movie)
+        f1.write('MovieContent')
+
+    file_list = samosa.find_all_media_files(extentions=['.mkv'],
+                                            dir_to_search=str(tmpdir))
+    assert len(file_list) is 1
+
+
+def test_find_all_supported_files(movielist, tmpdir):
+    for movie in movielist:
+        f1 = tmpdir.join(movie)
+        f1.write('MovieContent')
+
+    file_list = samosa.find_all_media_files(dir_to_search=str(tmpdir))
+    assert len(file_list) is 3
