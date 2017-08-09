@@ -9,4 +9,5 @@ import samosa
 # ])
 
 def test_find_only_mkv_files():
-    samosa.find_all_media_files()
+    file_list = samosa.find_all_media_files()
+    assert len(file_list) is 2
