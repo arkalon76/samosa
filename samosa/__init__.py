@@ -27,9 +27,6 @@ def resolve_imdb_from_filename(test_file):
               Please follow [title] [year] format')
         return None
     imdbResult = imdb.search_for_title(title)
-
-    print('\n')
-    print(imdbResult)
     for movie in imdbResult:
         if year == movie['year']:
             print('Match found')
